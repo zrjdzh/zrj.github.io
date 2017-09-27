@@ -1,0 +1,246 @@
+html,
+body { height: 100%; padding: 0; margin: 0; }
+
+html {
+	font-family:sans-serif;
+	-ms-text-size-adjust:100%;
+	-webkit-text-size-adjust:100%;
+	size-adjust:100%
+}           
+            
+.main{
+	height: 100%; 
+	box-sizing: border-box ; 
+	position: relative;
+	width: 100%;
+}
+
+.logo{
+	background-color:#222 ;
+	width: 100px; 
+	position: absolute; top: 0 ; left: 0 ; 
+	height: 100%; 
+	opacity: 1;
+}
+
+/*创建两个箭头标志*/
+.logo::before{
+	border: 15px solid transparent;
+    border-left: 15px solid #808080;
+    width: 0;
+    height: 0;
+    position: absolute;left:55px;top:50px;
+    content: ' ';
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    -ms-transition: all 0.2s 
+    transform-origin: 25% 50%;
+    -ms-transform-origin: 25% 50%;
+    -moz-transform-origin: 25% 50%;
+    -webkit-transform-origin: 25% 50%;
+    -o-transform-origin: 25% 50%;
+}
+
+.logo::after{
+	border: 15px solid transparent;
+    border-left: 15px solid #808080;
+    width: 0;
+    height: 0;
+    position: absolute;left:30px;top:50px;
+    content: ' ';
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    -ms-transition: all 0.2s 
+    transform-origin: 25% 50%;
+    -ms-transform-origin: 25% 50%;
+    -moz-transform-origin: 25% 50%;
+    -webkit-transform-origin: 25% 50%;
+    -o-transform-origin: 25% 50%;
+}
+
+/*在点击菜单同时箭头进行旋转*/
+.extended .logo::before{
+      transform: rotate(180deg);
+      -webkit-transform: rotate(180deg);
+      -moz-transform: rotate(180deg);
+      -o-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+}
+ 
+.extended .logo::after{
+      transform: rotate(180deg);
+      -webkit-transform: rotate(180deg);
+      -moz-transform: rotate(180deg);
+      -o-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+}
+       
+        
+.logo img{
+	background: no-repeat;
+	width:70px;
+	height:60px;
+	position: relative; top:450px; left:15px;
+}
+
+/*logo旋转*/
+.logo:hover img{
+	-webkit-transition-property: -webkit-transform;
+    -webkit-transition-duration: 1s;
+    -moz-transition-property: -moz-transform;
+    -moz-transition-duration: 1s;
+    -webkit-animation: rotate 3s linear infinite;
+    -moz-animation: rotate 3s linear infinite;
+    -o-animation: rotate 3s linear infinite;
+    animation: rotate 3s linear infinite;
+}
+
+@-webkit-keyframes rotate{
+	from{-webkit-transform: rotate(0deg)}
+    to{-webkit-transform: rotate(360deg)}
+}
+@-moz-keyframes rotate{
+	from{-moz-transform: rotate(0deg)}
+    to{-moz-transform: rotate(359deg)}
+}
+@-o-keyframes rotate{
+	from{-o-transform: rotate(0deg)}
+    to{-o-transform: rotate(359deg)}
+}
+@keyframes rotate{
+	from{transform: rotate(0deg)}
+    to{transform: rotate(359deg)}
+}
+
+/*绘制圆环*/
+.circle{
+	border-radius:50px; 
+	width:80px; 
+	height:80px; 
+	border:5px solid #FFF;
+	z-index: 100;
+	position: absolute;top:432px;left:5px;
+}
+
+
+.right{	
+	height: 100%; 
+	position: absolute; top:0; left:100px;right: 0;
+	width: 100%;
+	color: #FFF;
+	text-align: center;
+	font:60px/500px "Microsoft YaHei", "微软雅黑";
+    font-weight:bold;
+    text-shadow: 5px 5px #000;
+}
+
+/*3D打印图标样式*/
+#imgs{
+	position: absolute;top: 450px;left: 900px;
+	width: 100px;
+	height: 100px;
+}
+
+
+.left{
+	background:#000 ;
+	height: 100%; 
+	position: absolute; top:0; left:-300px;right: 0;
+	width: 300px;
+}
+
+.left li{
+	list-style-type:none;
+}
+
+.meun li{
+	position: relative;top:500px; left: 20px;
+	color:#C0C0C0;
+	font:20px/1.5 "Microsoft YaHei", "微软雅黑";
+	cursor:pointer;
+}
+
+.meun li:hover{
+	color: #FFF;
+}
+
+.information{
+    position: absolute;top:700px; left: 20px;
+	color:#C0C0C0;
+	font:10px/1.5 "Microsoft YaHei", "微软雅黑";
+}
+
+/*介绍页面样式*/
+.aboutUs{
+	background: #000;
+	height: 100%; 
+	position: absolute; top:0; left:100px;right: 0;
+	width: 100%;
+	z-index: 1;
+	font:20px/1 "Microsoft YaHei", "微软雅黑";
+	color: #FFF;
+	text-align: center;
+	line-height: 100px;
+	padding: 250px 0 0 0;
+	animation:slideRight 1s;
+	-webkit-transform: translateX(-0);
+    -moz-transform: translateX(-0);
+    -o-transform: translateX(-0);
+    -ms-transform: translateX(-0);
+}
+
+.aboutUs p{
+	font:20px/1 "Microsoft YaHei", "微软雅黑";
+	color: #FFF;
+	text-align: center;
+	line-height: 100px;
+	background: #808080;
+}
+
+/*介绍页面从右进入动画*/
+@-webkit-keyframes 'slideRight' {
+                0% { left: 1000px; }
+            	100% { left: 100px; }
+            }
+            @-moz-keyframes 'slideRight' {
+            	0% { left: 1000px; }
+            	100% { left: 100px; }
+            }
+            @-o-keyframes 'slideRight' {
+            	0% { left: 1000px; }
+            	100% { left: 100px; }
+            }
+            @-ms-keyframes 'slideRight' {
+            	0% { left: 1000px; }
+            	100% { left: 100px; }
+            }
+            @keyframes 'slideRight' {
+            	0% { left: 1000px; }
+            	100% { left: 100px; }
+            }
+            
+.slideRight:target{
+            	z-index: 100;
+            	-webkit-animation-name: slideRight;
+            	-webkit-animation-duration: 1s;
+            	-webkit-animation-iteration-count: 1;
+            	-moz-animation-name: slideRight;
+            	-moz-animation-duration: 1s;
+            	-moz-animation-iteration-count: 1;
+            	-ms-animation-name: slideRight;
+            	-ms-animation-duration: 1s;
+            	-ms-animation-iteration-count: 1;
+            	-o-animation-name: slideRight;
+            	-o-animation-duration: 1s;
+            	-o-animation-iteration-count: 1;
+            	animation-name: slideRight;
+            	animation-duration: 1s;
+            	animation-iteration-count: 1;
+            }
+
+#current-time{
+	position: absolute;left: 130px;bottom: 30px;
+	color: #FFF;
+}

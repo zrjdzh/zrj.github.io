@@ -1,0 +1,316 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="ua-windows ua-webkit">
+  <head>
+    <meta charset="utf-8">
+    <title>物托邦 - 方块世界</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, width=device-width"/>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="keywords" content="3D打印模型,3D打印,STL模型下载,STL文件下载,3D打印模型库,STL格式文件,3D模型" />
+    <meta name="abstract" content="Share your digital designs for physical objects." />
+    <meta name="description" content="物托邦3D打印" />
+    <link rel="shortcut  icon" type="img/favicon" href="favicon.ico" media="screen"  />
+    <link href="./css/bootstrap.css" rel="stylesheet">
+    <link href="./css/flat-ui.css" rel="stylesheet">
+    <link href="./css/colorpicker.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
+    <link href="./css/item.css" rel="stylesheet">
+    
+  </head>
+  <body>
+    <div id="instructions">
+      <h3 class="demo-panel-title"><a href="./cube.html">方块世界</a></h3> 
+      <select class="actionsMenu" value="Actions" tabindex="1">
+        <option value="noop" selected="selected">菜单</option>
+        <option value="viewInstructions">查看帮助</option>
+        <option value="loadExample">导入案例作品</option>
+        <option value="browseRecent">推荐作品</option>
+        <option value="stlExport">导出3D打印格式</option>
+        <option value="export">导出图片</option>
+        <option value="reset">重置</option>
+        <option value="login">登录</option>
+        <option value="about">关于</option>
+      </select>
+
+      <div class="share mrl">
+        <ul>
+          <li>
+            <label class="share-label" for="share-toggle2">场景网格</label>
+            <div data-action="showGrid" class="toggle">
+              <label class="toggle-radio" for="share-toggle2">显示</label>
+              <input type="radio" name="share-toggles" id="share-toggle2" value="toggle1" checked="checked">
+              <label class="toggle-radio" for="share-toggle1">隐藏</label>
+              <input type="radio" name="share-toggles" id="share-toggle1" value="toggle2">
+            </div>
+          </li>
+          <li>
+            <label class="share-label" for="share-toggle3">网格线框</label>
+            <div data-action="setWireframe" class="toggle">
+              <label class="toggle-radio" for="share-toggle4">显示</label>
+              <input type="radio" name="share-toggles2" id="share-toggle4" value="toggle1" checked="checked">
+              <label class="toggle-radio" for="share-toggle3">隐藏</label>
+              <input type="radio" name="share-toggles2" id="share-toggle3" value="toggle2">
+            </div>
+          </li>
+          <li>
+            <label class="share-label" for="share-toggle4">动画制作</label>
+            <div data-action="toggleAnimation" class="toggle">
+              <label class="toggle-radio" for="share-toggle6">打开</label>
+              <input type="radio" name="share-toggles3" id="share-toggle6" value="toggle1">
+              <label class="toggle-radio" for="share-toggle5">关闭</label>
+              <input type="radio" name="share-toggles3" id="share-toggle5" value="toggle2" checked="checked">
+            </div>
+          </li>
+        </ul>
+      </div> <!-- /share -->
+      
+      <div class="row color-container">
+        <div class="span3">
+            <div class="btn-group color-picker">
+              <a class="btn btn-primary colorPickButton active" href="#"><i data-color="0" class="color"></i></a>
+              <a class="btn btn-primary colorPickButton" href="#"><i data-color="1" class="color"></i></a>
+              <a class="btn btn-primary colorPickButton" href="#"><i data-color="2" class="color"></i></a>
+              <a class="btn btn-primary colorPickButton" href="#"><i data-color="3" class="color"></i></a>
+              <a class="btn btn-primary colorPickButton" href="#"><i data-color="4" class="color"></i></a>
+              <a class="btn btn-primary colorAddButton" data-color="#000000" href="#"><i data-color="-1" class="colorAdd">++</i></a>
+            </div>
+        </div>
+      </div>
+      <div class="share">
+        <div class="tile">
+          <img class="tile-image big-illustration" alt="" src="img/brain-share.png" />
+          <p>发挥你的想象力！让其他人可以查看下载你的大作！</p>
+          <a id="shareButton" class="btn btn-primary btn-large btn-block">保存</a>
+        </div>
+      </div>
+      
+     <div id="output"></div>
+    </div>
+
+    <div id="toolbuttons" style="display: none;">
+      <button id="tooleraser" class="btn btn-primary"><i class="icon icon-eraser"></i></button>
+      <button id="toolzoomin" class="btn btn-primary"><i class="icon icon-zoomin"></i></button>
+      <button id="toolzoomout" class="btn btn-primary"><i class="icon icon-zoomout"></i></button>
+    </div>
+    <div id="turnbuttons" style="display: none;">
+      <button id="toolturnleft" class="btn btn-primary"><i class="icon icon-turnleft"></i></button>
+      <button id="toolturnright" class="btn btn-primary"><i class="icon icon-turnright"></i></button>
+    </div>
+    
+    <div class="animationControls">
+      <div class="playback">
+        <span class="play-pause fui-play"></span>
+      </div>
+      <div class="sliderContainer">
+        <div id="slider" class="ui-slider">
+        </div>
+      </div>
+      <div class="addRemove">
+        <span class="plus-button fui-plus"></span>
+        <span class="minus-button fui-cross"></span>
+      </div>
+    </div>
+    
+    <div id="welcome" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">欢迎来到方块世界</h3>
+      </div>
+      <div class="modal-body">
+        <div class="span3 hello">
+          <p><h4>创建属于你的方块作品!</h4></p>
+          <p>使用你的鼠标/手指放置方块。完成大作，与朋友分享。</p>
+          <p><img src="./img/critter.png"></p>
+        </div>
+        <div class="span3">
+          <div id="controlhelppc" class="tile controls">
+            <p><h4>控制</h4></p>
+            <p><strong>鼠标左键 + 拖动</strong> 用来旋转角度。</p>
+            <p><strong>鼠标左键</strong> 用来放置一个方块。</p>
+            <p><strong>Shift键</strong> 用来删除一个方块。</p>
+            <p><strong>Alt键</strong> 用来批量编辑方块。</p>
+            <p><strong>1-5键</strong> 用来更换颜色。</p>
+            <p><strong>+/-键</strong> 或 <strong>鼠标滚轮</strong> 用来缩放。</p>
+            <p><strong>拖动</strong> 一张创意 .png 图片来加载。</p>
+          </div>
+          <div id="controlhelppad" class="tile controls" style="display: none;">
+            <p><h4>控制</h4></p>
+            <p><strong>单个手指 + 拖动</strong> 用来角度。</p>
+            <p><strong>轻触旋转按钮</strong> 旋转5°角度。</p>
+            <p><strong>按住旋转按钮</strong> 连续旋转。</p>
+            <p><strong>轻触放大镜</strong> 放大/缩小视角。</p>
+            <p><strong>按住放大镜</strong> 快速放大/缩小。</p>
+            <p><strong>手指轻触</strong> 用来放置一个方块。</p>
+            <p><strong>点击橡皮擦</strong> 开启/关闭删除模式。</p>
+          </div>
+        </div>
+        <div class="span3 hello">
+          <p><h4>动画制作</h4></p>
+          <p>打开动画制作按钮，就可以创建出一个活动的物体或生物！</p>
+          <p><img src="img/anigif.gif" width=250></p>
+        </div>        
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">确定</button>
+      </div>
+    </div>
+    
+    <div id="share" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">保存设计作品</h3>
+      </div>
+      <div class="modal-body">
+        
+        <div class="share-form"></div>
+        
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-cancel" data-dismiss="modal" aria-hidden="true">关闭</button>
+      </div>
+    </div>
+    
+    <div id="about" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">关于</h3>
+      </div>
+      <div class="modal-body">
+        <p>Modify by wutopia.</p>
+        <p>感谢 <a href="http://twitter.com/maxogden">@maxogden</a>的<a href="http://www.voxeljs.com">voxeljs</a>项目。</p>
+        <p>感谢 <a href="http://mrdoob.com/">Mr. Doob</a>的Voxel Painter项目。</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+      </div>
+    </div>
+    
+    <div id="browse" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">推荐作品</h3>
+      </div>
+      <div class="modal-body">
+        <div class="demo-browser-content">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+      </div>
+    </div>
+    
+    <!--顶部菜单-->
+    <div id="nav">
+		<ul class="nav-menu clearfix unstyled">
+			<li><a href="./index.html" class="three-d active">
+				主页
+				<span class="three-d-box"><span class="front">主页</span><span class="back">主页</span></span>
+			</a></li>
+			<li><a href="./cube.html" class="three-d">
+				方块世界
+				<span class="three-d-box"><span class="front">方块世界</span><span class="back">方块世界</span></span>
+			</a></li>
+			<li><a href="#" class="three-d">
+				立体浮雕
+				<span class="three-d-box"><span class="front">立体浮雕</span><span class="back">立体浮雕</span></span>
+			</a></li>
+			<li><a href="#" class="three-d">
+				About
+				<span class="three-d-box"><span class="front">About</span><span class="back">About</span></span>
+			</a></li>
+			<li><a href="#" class="three-d">
+				Contact
+				<span class="three-d-box"><span class="front">Contact</span><span class="back">Contact</span></span>
+			</a></li>
+			<li><a href="#" class="three-d">
+				Blog
+				<span class="three-d-box"><span class="front">Blog</span><span class="back">Blog</span></span></a>
+			</li>
+			<li><a href="#" class="three-d">
+				Shop
+				<span class="three-d-box"><span class="front">Shop</span><span class="back">Shop</span></span>
+			</a></li>
+		</ul>
+	</div>
+    
+    
+    <script type="text/javascript">
+    (function () {
+        var e = "mobilephone",
+            t = window,
+            n = t.navigator.userAgent,
+            r = n.match(/WindVane/i) ? "app" : "browser",
+            i = /iPhone|iPad|iPod/i.test(n),
+            s = /Android/i.test(n),
+            o = "unknow",
+            u = n.match(/(?:OS|Android)[\/\s](\d+[._]\d+(?:[._]\d+)?)/i),
+            a = u && u.length > 0 ? u[1].replace(/\_/g, ".") : "0",
+        f = document.getElementsByTagName("html")[0],
+        l = "unknow",
+        c = null,
+        h = {}, p = function (e, t) {
+            var n = e.split("."),
+                r = t.split("."),
+                i = Math.max(n.length, r.length),
+                s, o, u;
+            for (var a = 0; a < i; a++) {
+                o = ~~n[a],
+                u = ~~r[a],
+                o > u ? s = 1 : o < u ? s = -1 : s = 0;
+                if (s !== 0) return s
+            }
+            return s
+        }, d = function () {
+            var e = t.screen,
+                n = t.devicePixelRatio || 1,
+                r = t.orientation || 0,
+                i, s, o, u;
+            e ? (o = r == 0 || r == 180 ? e.width : e.height, i = t.innerWidth, Math.abs(o - i * n) < .2 * h.width ? (o = e.width, u = e.height, i = o / n, s = u / n) : (i = e.width, s = e.height, o = i * n, u = s * n), i > s && (i = [i, s], s = i[0], i = i[1], o = [o, u], u = o[0], o = o[1])) : (i = r == 0 || r == 180 ? t.innerWidth : t.innerHeight, s = r == 0 || r == 180 ? t.innerHeight : t.innerWidth, o = i * n, u = s * n);
+            var a = "createTouch" in document && "ontouchstart" in t ? 1 : 0;
+            return {
+                dw: i,
+                dh: s,
+                pw: o,
+                ph: u,
+                ist: a,
+                ra: n
+            }
+        };
+        h = d(),
+        i ? o = "ios" : s && (o = "android"),
+        a || (a = "unknow"),
+        o == "android" && (/Chrome/i.test(n) ? (l = "chromium", c = "chromium") : (l = "webkit", c = "chrome-lite"));
+        var v = function (e) {
+            f.getAttribute("client") ? $client.client = f.getAttribute("client") : (f.setAttribute("client", e.client), $client.client = e.client),
+            f.getAttribute("runtime") ? $client.runtime = f.getAttribute("runtime") : (f.setAttribute("runtime", e.runtime), $client.runtime = e.runtime),
+            $client.runtime && ($client["runtime"] == "browser" ? $client.isBrowser = !0 : $client.isApp = !0),
+            f.getAttribute("os-type") ? $client["os-type"] = f.getAttribute("os-type") : (f.setAttribute("os-type", e.osType), $client["os-type"] = e.osType),
+            $client["os-type"] && ($client.isIOS = $client["os-type"] == "ios", $client.isAndroid = $client["os-type"] == "android"),
+            f.getAttribute("os-version") ? $client["os-version"] = f.getAttribute("os-version") : (f.setAttribute("os-version", e.osVersion), $client["os-version"] = e.osVersion),
+            e.webViewCore && (f.getAttribute("webview-core") || f.setAttribute("webview-core", e.webViewCore), $client["webview-core"] = e.webViewCore),
+            f.getAttribute("android-browser") ? $client["android-browser"] = f.getAttribute("android-browser") : (f.setAttribute("android-browser", e.androidBrowser), $client["android-browser"] = e.androidBrowser),
+            e.screen && ($client.screen = e.screen)
+        };
+        t.$client = {}, t.$setClient = v,
+        v({
+            client: e,
+            runtime: r,
+            osType: o,
+            osVersion: a,
+            webViewCore: l,
+            androidBrowser: c,
+            screen: h,
+            compareVersion: p
+        })
+    })();
+    </script>
+    <script type="text/javascript" src="./js/flatui-deps.js"></script>
+    <script type="text/javascript" src="./js/bootstrap-colorpicker.js"></script>
+    <script type="text/javascript" src="./js/FileSaver.js"></script>
+    <script type="text/javascript" src="./js/hammer.min.js"></script>
+    <script type="text/javascript" src="./js/bundle.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1255727926' style='position%3Aabsolute%3Bbottom%3A0%3Bleft%3A0%3B'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1255727926%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>    
+  </body>
+</html>

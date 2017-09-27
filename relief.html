@@ -1,0 +1,64 @@
+
+<!DOCTYPE html charset="UTF-8">
+<html ng-app="lithoApp" ng-controller="LithoAppController as lithoapp" resize>
+
+<head>
+    <script> 
+        // modify the following line to change site text for your locale
+        // look in the data folder for examples in English and Italian.
+        var localeFile='layout_cn.json';
+    </script>
+    <style>
+        .ng-cloak {
+            display: none;
+        }
+    </style>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+    <title ng-bind-template="{{lithoapp.getPageTitle()}}"></title>
+    <meta name="keywords" content="3D打印模型,3D打印,STL模型下载,STL文件下载,3D打印模型库,STL格式文件,3D模型" />
+    <meta name="abstract" content="Share your digital designs for physical objects." />
+    <meta name="description" content="我爱3D是一个3D打印模型分享社区，下载这里的模型可以使用3D打印机打印出各种各样的有趣好玩的东西。Fast Image to Lithophane converter. Free, Offline, mobile and browser based utility."
+    />
+    <link rel="apple-touch-icon" href="./images/app-icon.png">
+    <link rel="apple-touch-startup-image" href="./images/app-startup.png">
+    <link rel="shortcut icon" href="./images/appicon.ico">
+    <link rel="stylesheet" href="css/relief/bootstrap.min.css">
+    <link rel="stylesheet" href="css/relief/style.css">
+    <script src="js/relief/three.71.min.js"></script>
+    <script src="js/relief/TrackballControls.js"></script>
+    <script src="js/relief/FileSaver.js"></script>
+    <script src="js/relief/main.js"></script>
+    <script src="js/relief/angular.min.js"></script>
+    <script src="js/relief/app.js"></script>
+    <script src="js/relief/share.js"></script>
+</head>
+
+<body>
+    <div class="container wrapper" ng-controller="TabController as tab">
+        <div ng-include="'nav-bar.html'" class="navigation"></div>
+        <div ng-include="'view-page.html'" onload="lithoapp.initLithophane();"></div>
+        <div ng-include="'settings-pages.html'"></div>
+        <div class="push"></div>
+    </div>
+    <div id="share" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">保存作品</h3>
+        </div>
+        <div class="modal-body">
+            <div class="share-form"></div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-cancel" data-dismiss="modal" aria-hidden="true">关闭</button>
+        </div>
+    </div>
+    <script src="js/relief/jquery.min.js"></script>
+    <script src="js/relief/bootstrap.min.js"></script>
+</body>
+
+</html>
